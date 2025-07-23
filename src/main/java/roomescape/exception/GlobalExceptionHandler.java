@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -20,7 +19,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e) {
-        log.warn("BusinessException 발생 : {}, {}", e.getCode(), e.getMessage(), e);
+        log.info("BusinessException 발생 : {}, {}", e.getCode(), e.getMessage(), e);
         return ResponseEntity
             .status(e.getHttpStatus())
             .body(ErrorResponse.from(e));
@@ -37,17 +36,6 @@ public class GlobalExceptionHandler {
             "validation.failed",
             "입력값이 올바르지 않습니다.",
             arguments
-        );
-    }
-
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorResponse handleDataIntegrityViolation(DataIntegrityViolationException e) {
-        log.warn("DataIntegrityViolationException 발생 : {}", e.getMessage(), e);
-        return new ErrorResponse(
-            "data.integrity.violation",
-            "요청한 데이터가 무결성 제약 조건을 위반했습니다.",
-            Map.of()
         );
     }
 

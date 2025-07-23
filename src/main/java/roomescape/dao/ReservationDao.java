@@ -72,5 +72,10 @@ public class ReservationDao {
             throw new ReservationNotFoundException(id);
         }
     }
+
+    public boolean existsByTimeId(Long timeId) {
+        String sql = "SELECT EXISTS (SELECT 1 FROM reservation WHERE time_id = ?)";
+        return jdbcTemplate.queryForObject(sql, Boolean.class, timeId);
+    }
 }
 

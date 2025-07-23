@@ -2,10 +2,8 @@ package roomescape.exception;
 
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-@Getter
 public class BusinessException extends RuntimeException {
 
     private final String code;
@@ -21,5 +19,17 @@ public class BusinessException extends RuntimeException {
 
     protected void addArgument(String key, Object value) {
         arguments.put(key, value);
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public Map<String, Object> getArguments() {
+        return arguments;
+    }
+
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
     }
 }
