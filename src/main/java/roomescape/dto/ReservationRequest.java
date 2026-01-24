@@ -6,14 +6,14 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public record ReservationRequest(
-    @NotBlank
+    @NotBlank(message = "{reservation.name.notBlank}")
     String name,
 
-    @NotNull
+    @NotNull(message = "{reservation.date.notNull}")
     LocalDate date,
 
     @JsonProperty("time")
-    @NotNull
+    @NotNull(message = "{reservation.timeId.notNull}")
     Long timeId
 ) {
 }
